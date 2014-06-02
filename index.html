@@ -1,12 +1,32 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
   <head>
-    <link rel="stylesheet" type="text/css" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css"/>
+    <meta charset="utf-8"/>
+    <title>planning</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width">
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/main.css">
+    <base href="/realtime-planning/"/>
   </head>
-  <body ng-app="realtime-planning">
-    <h1>Realtime-Planning</h1>
+  <body>
+    <section data-ng-view></section>
 
-    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.1/angular.min.js"></script>
-    <script type="text/javascript" src="app.js"></script>
+    <script src="//apis.google.com/js/api.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script> 
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.0.5/angular.min.js"></script>
+
+    <script src="js/app.js"></script>
+    <script src="js/services/storage.js"></script>
+    <script src="js/directives/on-blur.js"></script>
+    <script src="js/directives/collaborative.js"></script>
+    <script src="js/directives/focus.js"></script>
+
+    <script src="js/controllers/install.js"></script>
+    <script src="js/controllers/create.js"></script>
+    <script src="js/controllers/main.js"></script>
+    <script src="js/controllers/collaborators.js"></script>
+
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
   </body>
 </html>

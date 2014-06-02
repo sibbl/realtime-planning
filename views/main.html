@@ -1,0 +1,30 @@
+<section ng-controller="CollaboratorsController" id="collaborators">
+    <img ng-repeat="collaborator in collaborators | limitTo: 5"
+         ng-src="{{collaborator.photoUrl}}"
+         alt="{{collaborator.displayName}}"
+         title="{{collaborator.displayName}}"
+         ng-style="{'background-color': collaborator.color}">
+    <button ng-click="share()" id="share">share</button>
+</section>
+
+<section id="planningapp">
+    <header id="header">
+        <h1>the planning app</h1>
+        <form id="plan-item-form" ng-submit="addPlanItem()">
+            <input id="new-plan-item" placeholder="What else do we need?" ng-model="newPlanItem" autofocus>
+        </form>
+    </header>
+    <section id="main" ng-show="planItems.length" ng-cloak>
+        <ul id="plan-list">
+            <li ng-repeat="item in planItems.asArray()" ng-class="{editing: item == editedPlanItem}">
+                <div class="view">
+                    <label ng-dblclick="editPlanItem(item)">{{item.title.text}}</label>
+                    <button class="destroy" ng-click="removePlanItem(item)"></button>
+                </div>
+                <form ng-submit="donePlanItemEditing(item)">
+                    <input class="edit" ng-model="item.title.text" collaborative on-blur="donePlanItemEditing()" focus="item == editedPlanItem">
+                </form>
+            </li>
+        </ul>
+    </section>
+</section>
