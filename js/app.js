@@ -2,7 +2,7 @@
 
 var CONFIG = {
   clientId: '350332239258.apps.googleusercontent.com',
-  apiKey: 'IzaSyBLVWSlLULk3ng3U5D1G-YhUSt_tltGR14'
+  apiKey: 'IzaSyBLVWSlLULk3ng3U5D1G-YhUSt_tltGR14',
   scopes: [
     'https://www.googleapis.com/auth/drive.file',
     'https://www.googleapis.com/auth/drive.install'
