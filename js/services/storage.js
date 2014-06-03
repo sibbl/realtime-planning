@@ -122,7 +122,8 @@ angular.module('planning').service('storage', ['$q', '$rootScope', 'config',
     this.load = function (id) {
       var deferred = $q.defer();
       var initialize = function (model) {
-        model.getRoot().set('planItems', model.createList());
+        model.getRoot().set('planCategories', model.createList());
+        model.getRoot().get('planCategories').set('planItems', model.createList());
       };
       var onLoad = function (document) {
         this.setDocument(id, document);

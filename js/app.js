@@ -1,8 +1,8 @@
 'use strict';
 
 var CONFIG = {
-  clientId: 'our-client-id',
-  apiKey: 'our-api-key',
+  clientId: '350332239258.apps.googleusercontent.com',
+  apiKey: 'IzaSyBLVWSlLULk3ng3U5D1G-YhUSt_tltGR14'
   scopes: [
     'https://www.googleapis.com/auth/drive.file',
     'https://www.googleapis.com/auth/drive.install'
@@ -13,15 +13,24 @@ var app = {};
 
 app.module = angular.module('planning', []);
 
+app.PlanCategory = function () {
+};
+
 //simple type for plan items
 app.PlanItem = function () {
+};
+
+app.PlanCategory.prototype.initialize = function (title, items) {
+  var model = gapi.drive.realtime.custom.getModel(this);
+
+  this.title = model.createString(title);
+  this.items = model.createList(items);
 };
 
 //Initializer for constructing via the realtime API
 app.PlanItem.prototype.initialize = function (title, providers, consumers) {
   var model = gapi.drive.realtime.custom.getModel(this);
 
-  //TODO: implement our model
   this.title = model.createString(title);
   this.providers = model.createList(providers);
   this.consumers = model.createList(consumers);
@@ -95,6 +104,11 @@ gapi.load('auth:client:drive-share:drive-realtime', function () {
     get: gapi.drive.realtime.CollaborativeString.prototype.getText
   });
 
+  //PlanCategory class
+  app.PlanCategory.prototype.title = gapi.drive.realtime.custom.collaborativeField('title');
+  app.PlanCategory.prototype.providers = gapi.drive.realtime.custom.collaborativeField('items');
+  gapi.drive.realtime.custom.registerType(app.PlanCategory, 'planCategory');
+  gapi.drive.realtime.custom.setInitializer(app.PlanCategory, app.PlanCategory.prototype.initialize);
   //register our PlanItem class
   app.PlanItem.prototype.title = gapi.drive.realtime.custom.collaborativeField('title');
   app.PlanItem.prototype.providers = gapi.drive.realtime.custom.collaborativeField('providers');
