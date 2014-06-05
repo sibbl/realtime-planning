@@ -1,4 +1,4 @@
-<section ng-controller="CollaboratorsController" id="collaborators">
+<section id="collaborators">
     <img ng-repeat="collaborator in collaborators | limitTo: 5"
          ng-src="{{collaborator.photoUrl}}"
          alt="{{collaborator.displayName}}"
@@ -50,7 +50,7 @@
                             </div>
                         </div>
                         <div class="distribution-list">
-                            <ul>
+                            <ul ng-show="item.distribution.length">
                                 <li ng-repeat="distrItem in item.distribution.items()" ng-class="{isMe: distrItem[0] == currentUser.userId}">
                                     <div class="username">{{distrItem[0]}}</div>
                                     <div class="consume">consumes: {{distrItem[1].consumeCount.text}}</div>

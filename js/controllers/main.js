@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('planning').controller('MainController', ['$scope', '$routeParams', 'realtimeDocument',
+angular.module('planning').controller('MainController', ['$scope', '$routeParams', 'realtimeDocument', 'config',
   /**
    * Controller for editing the plan items
    *
@@ -9,18 +9,48 @@ angular.module('planning').controller('MainController', ['$scope', '$routeParams
    * @param document
    * @constructor
    */
-  function ($scope, $routeParams, realtimeDocument) {
+  function ($scope, $routeParams, realtimeDocument, config) {
     $scope.fileId = $routeParams.fileId;
-
     $scope.realtimeDocument = realtimeDocument;
-    $scope.planCategories = realtimeDocument.getModel().getRoot().get('planCategories');
+    var appId = config.clientId.split('.').shift();
+
+    //get and watch collaborators
+    var collaboratorListener = function () {
+      $scope.$apply(function () {
+        $scope.collaborators = $scope.realtimeDocument.getCollaborators();
+      });
+    };
+    $scope.collaborators = $scope.realtimeDocument.getCollaborators();
 
     //read the current user
     $scope.currentUser = null;
-    var collaborators = realtimeDocument.getCollaborators();
-    for(var i in collaborators) {
-      if(collaborators[i].isMe === true) $scope.currentUser = collaborators[i];
+    for(var i in $scope.collaborators) {
+      if($scope.collaborators[i].isMe === true) $scope.currentUser = $scope.collaborators[i];
     }
+
+    //refresh collaborator list when someone leaves or joins the document
+    $scope.realtimeDocument.addEventListener(gapi.drive.realtime.EventType.COLLABORATOR_LEFT, collaboratorListener);
+    $scope.realtimeDocument.addEventListener(gapi.drive.realtime.EventType.COLLABORATOR_JOINED, collaboratorListener);
+
+    //remove listeners when leaving the website
+    $scope.$on('$destroy', function () {
+      var doc = $scope.realtimeDocument;
+      if (doc) {
+        doc.removeEventListener(gapi.drive.realtime.EventType.COLLABORATOR_LEFT, collaboratorListener);
+        doc.removeEventListener(gapi.drive.realtime.EventType.COLLABORATOR_JOINED, collaboratorListener);
+      }
+    });
+
+    $scope.share = function () {
+      var fileId = this.fileId;
+      var client = new gapi.drive.share.ShareClient(appId);
+      client.setItemIds([fileId]);
+      client.showSettingsDialog();
+    };
+
+
+    //get categories
+    $scope.planCategories = realtimeDocument.getModel().getRoot().get('planCategories');
 
     //make sure that all plan items include our user id
     realtimeDocument.getModel().beginCompoundOperation();
@@ -64,8 +94,6 @@ angular.module('planning').controller('MainController', ['$scope', '$routeParams
 
         var distributionData = realtimeDocument.getModel().create(app.PlanItemDistribution);
         item.distribution.set($scope.currentUser.userId, distributionData);
-
-        console.log( item.distribution.items());
 
         this.newItemTitle = '';
         this.planCategories.get(categoryIndex).items.push(item);
