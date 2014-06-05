@@ -10,19 +10,36 @@
 <section id="planningapp">
     <header id="header">
         <h1>the planning app</h1>
-        <form id="plan-item-form" ng-submit="addPlanItem()">
-            <input id="new-plan-item" placeholder="What else do we need?" ng-model="newPlanItem" autofocus>
+        <form id="category-form" ng-submit="addCategory()">
+            <input id="new-category-item" placeholder="Add another category" ng-model="newCategoryTitle" autofocus>
         </form>
     </header>
-    <section id="main" ng-show="planItems.length" ng-cloak>
-        <ul id="plan-list">
-            <li ng-repeat="item in planItems.asArray()" ng-class="{editing: item == editedPlanItem}">
-                <div class="view">
-                    <label ng-dblclick="editPlanItem(item)">{{item.title.text}}</label>
-                    <button class="destroy" ng-click="removePlanItem(item)"></button>
+    <section id="main" ng-show="planCategories.length" ng-cloak>
+        <ul id="category-list">
+            <li ng-repeat="(categoryIndex, category) in planCategories.asArray()" ng-class="{editing: category == editedCategory}">
+                <div class="title">
+                    <div class="view">
+                        <label ng-dblclick="editCategory(category)">{{category.title.text}}</label>
+                        <button class="destroy" ng-click="removeCategory(category)"></button>
+                    </div>
+                    <form ng-submit="doneCategoryEditing(category)">
+                        <input class="edit" ng-model="category.title.text" collaborative on-blur="doneCategoryEditing()" focus="category == editedCategory">
+                    </form>
                 </div>
-                <form ng-submit="donePlanItemEditing(item)">
-                    <input class="edit" ng-model="item.title.text" collaborative on-blur="donePlanItemEditing()" focus="item == editedPlanItem">
+                <ul class="plan-item-list" ng-show="planCategories.length">
+                    <li ng-repeat="item in category.items.asArray()" ng-class="{editing: item == editedItem}">
+                        <div class="view">
+                            <label ng-dblclick="editItem(item)">{{item.title.text}}</label>
+                            <button class="destroy" ng-click="removeItem(categoryIndex, item)"></button>
+                        </div>
+                        <form ng-submit="doneItemEditing(item)">
+                            <input class="edit" ng-model="item.title.text" collaborative on-blur="doneItemEditing()" focus="item == editedItem">
+                        </form>
+                    </li>
+                </ul>
+
+                <form class="add-item-form" ng-submit="addItem(categoryIndex)">
+                    <input class="new-category-item" placeholder="What else do we need?" ng-model="newItemTitle">
                 </form>
             </li>
         </ul>

@@ -123,7 +123,6 @@ angular.module('planning').service('storage', ['$q', '$rootScope', 'config',
       var deferred = $q.defer();
       var initialize = function (model) {
         model.getRoot().set('planCategories', model.createList());
-        model.getRoot().get('planCategories').set('planItems', model.createList());
       };
       var onLoad = function (document) {
         this.setDocument(id, document);
@@ -132,12 +131,12 @@ angular.module('planning').service('storage', ['$q', '$rootScope', 'config',
       }.bind(this);
       var onError = function (error) {
         if (error.type === gapi.drive.realtime.ErrorType.TOKEN_REFRESH_REQUIRED) {
-          $rootScope.$emit('planItems.token_refresh_required');
+          $rootScope.$emit('planCategories.token_refresh_required');
         } else if (error.type === gapi.drive.realtime.ErrorType.CLIENT_ERROR) {
-          $rootScope.$emit('planItems.client_error');
+          $rootScope.$emit('planCategories.client_error');
         } else if (error.type === gapi.drive.realtime.ErrorType.NOT_FOUND) {
           deferred.reject(error);
-          $rootScope.$emit('planItems.not_found', id);
+          $rootScope.$emit('planCategories.not_found', id);
         }
         $rootScope.$digest();
       };

@@ -13,6 +13,7 @@ var app = {};
 
 app.module = angular.module('planning', []);
 
+//type for plan categories
 app.PlanCategory = function () {
 };
 
@@ -20,20 +21,20 @@ app.PlanCategory = function () {
 app.PlanItem = function () {
 };
 
-app.PlanCategory.prototype.initialize = function (title, items) {
+app.PlanCategory.prototype.initialize = function (title) {
   var model = gapi.drive.realtime.custom.getModel(this);
 
   this.title = model.createString(title);
-  this.items = model.createList(items);
+  this.items = model.createList();
 };
 
 //Initializer for constructing via the realtime API
-app.PlanItem.prototype.initialize = function (title, providers, consumers) {
+app.PlanItem.prototype.initialize = function (title) {
   var model = gapi.drive.realtime.custom.getModel(this);
 
   this.title = model.createString(title);
-  this.providers = model.createList(providers);
-  this.consumers = model.createList(consumers);
+  this.providers = model.createList();
+  this.consumers = model.createList();
 };
 
 
@@ -85,7 +86,7 @@ app.module.run(['$rootScope', '$location', 'storage', function ($rootScope, $loc
   });
 
   //token expired, refresh
-  $rootScope.$on('planItems.token_refresh_required', function () {
+  $rootScope.$on('planCategories.token_refresh_required', function () {
     storage.requireAuth(true).then(function () {
       //no-op
     }, function () {
@@ -106,7 +107,7 @@ gapi.load('auth:client:drive-share:drive-realtime', function () {
 
   //PlanCategory class
   app.PlanCategory.prototype.title = gapi.drive.realtime.custom.collaborativeField('title');
-  app.PlanCategory.prototype.providers = gapi.drive.realtime.custom.collaborativeField('items');
+  app.PlanCategory.prototype.items = gapi.drive.realtime.custom.collaborativeField('items');
   gapi.drive.realtime.custom.registerType(app.PlanCategory, 'planCategory');
   gapi.drive.realtime.custom.setInitializer(app.PlanCategory, app.PlanCategory.prototype.initialize);
   //register our PlanItem class

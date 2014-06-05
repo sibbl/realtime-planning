@@ -13,35 +13,60 @@ angular.module('planning').controller('MainController', ['$scope', '$routeParams
     $scope.fileId = $routeParams.fileId;
 
     $scope.realtimeDocument = realtimeDocument;
-    $scope.planItems = realtimeDocument.getModel().getRoot().get('planItems');
-    $scope.newPlanItem = '';
+    $scope.planCategories = realtimeDocument.getModel().getRoot().get('planCategories');
+    $scope.newCategoryTitle = '';
+    $scope.newItemTitle = '';
 
-    /**
-     * Add a new plan item to the list, resets the new item text.
-     */
-    $scope.addPlanItem = function () {
-      if (this.newPlanItem) {
+    //add new category
+    $scope.addCategory = function () {
+      if (this.newCategoryTitle) {
         realtimeDocument.getModel().beginCompoundOperation();
-        var planItem = realtimeDocument.getModel().create(app.PlanItem, this.newPlanItem);
-        this.newPlanItem = '';
-        this.planItems.push(plan);
+        var category = realtimeDocument.getModel().create(app.PlanCategory, this.newCategoryTitle);
+        this.newCategoryTitle = '';
+        this.planCategories.push(category);
         realtimeDocument.getModel().endCompoundOperation();
       }
     };
 
-    //begin editing 
-    $scope.editPlanItem = function (planItem) {
-      $scope.editedPlanItem = planItem;
+    //begin editing of a category
+    $scope.editCategory = function (category) {
+      $scope.editedCategory = category;
     };
 
-    //cancel editing
-    $scope.donePlanItemEditing = function () {
-      $scope.editedPlanItem = null;
+    //cancel editing of acategory
+    $scope.doneCategoryEditing = function () {
+      $scope.editedCategory = null;
     };
 
-    //delete a plan item removing it from the list.
-    $scope.removePlanItem = function (planItem) {
-      this.planItems.removeValue(planItem);
+    //delete a category by removing it from the list
+    $scope.removeCategory = function (category) {
+      this.planCategories.removeValue(category);
+    };
+
+    //add new plan item
+    $scope.addItem = function (categoryIndex) {
+      if (this.newItemTitle) {
+        realtimeDocument.getModel().beginCompoundOperation();
+        var item = realtimeDocument.getModel().create(app.PlanItem, this.newItemTitle);
+        this.newItemTitle = '';
+        this.planCategories.get(categoryIndex).items.push(item);
+        realtimeDocument.getModel().endCompoundOperation();
+      }
+    };
+
+    //begin editing of a plan item
+    $scope.editItem = function (item) {
+      $scope.editedItem = item;
+    };
+
+    //cancel editing of plan item
+    $scope.doneItemEditing = function () {
+      $scope.editedItem = null;
+    };
+
+    //delete a plan item by removing it from its parent category
+    $scope.removeItem = function (categoryIndex,item) {
+      this.planCategories.get(categoryIndex).items.removeValue(item);
     };
     
     //undo local changes
