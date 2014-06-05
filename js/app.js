@@ -11,7 +11,7 @@ var CONFIG = {
 
 var app = {};
 
-app.module = angular.module('planning', []);
+app.module = angular.module('planning', ['ngRoute']);
 
 //type for plan categories
 app.PlanCategory = function () {
@@ -64,7 +64,7 @@ app.loadFile.$inject = ['$route', 'storage'];
 app.module.config(['$routeProvider',
   function ($routeProvider) {
     $routeProvider
-      .when('/plans/:fileId/:filter', {
+      .when('/plans/:fileId', {
         templateUrl: 'views/main.html',
         controller: 'MainController',
         resolve: {
