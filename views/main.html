@@ -52,12 +52,26 @@
                             </div>
                         </div>
                         <div class="distribution-list">
-                            <ul ng-show="item.distribution.length">
+                            <ul>
+                                <li ng-repeat="userId in item.distribution.keys()">
+                                    <div class="thumb">
+                                        <img ng-src="{{getUser(userId).photoUrl}}"
+                                             alt="{{getUser(userId).displayName}}"
+                                             title="{{getUser(userId).displayName}}"
+                                             ng-style="{'background-color': getUser(userId).color}">
+                                    </div>
+                                    <div class="username">{{getUser(userId).displayName}}</div>
+
+                                    <div class="consume">consumes: {{item.distribution.get(userId).consumeCount.text}}</div>
+                                    <div class="provides">provides: {{item.distribution.get(userId).provideCount.text}}</div>
+                                </li>
+                                <!--
                                 <li ng-repeat="distrItem in item.distribution.items()" ng-class="{isMe: distrItem[0] == currentUser.userId}">
                                     <div class="username">{{distrItem[0]}}</div>
                                     <div class="consume">consumes: {{distrItem[1].consumeCount.text}}</div>
                                     <div class="provides">provides: {{distrItem[1].provideCount.text}}</div>
                                 </li>
+                                -->
                             </ul>
                         </div>
                     </li>

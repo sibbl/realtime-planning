@@ -28,6 +28,14 @@ angular.module('planning').controller('MainController', ['$scope', '$routeParams
       if($scope.collaborators[i].isMe === true) $scope.currentUser = $scope.collaborators[i];
     }
 
+    //returns a collaboration user
+    $scope.getUser = function(userId) {
+      for(var i in $scope.collaborators) {
+        if($scope.collaborators[i].userId === userId) return $scope.collaborators[i];
+      }
+      return null;
+    }
+
     //refresh collaborator list when someone leaves or joins the document
     $scope.realtimeDocument.addEventListener(gapi.drive.realtime.EventType.COLLABORATOR_LEFT, collaboratorListener);
     $scope.realtimeDocument.addEventListener(gapi.drive.realtime.EventType.COLLABORATOR_JOINED, collaboratorListener);
