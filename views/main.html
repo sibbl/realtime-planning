@@ -16,10 +16,10 @@
     </header>
     <section id="main" ng-show="planCategories.length" ng-cloak>
         <ul id="category-list">
-            <li ng-repeat="(categoryIndex, category) in planCategories.asArray()" ng-class="{editing: category == editedCategory}">
+            <li ng-repeat="(categoryIndex, category) in planCategories.asArray()" ng-class="{editing: category == editedItem}">
                 <div class="title">
                     <div class="view">
-                        <label ng-dblclick="editCategory(category)">{{category.title.text}}</label>
+                        <label ng-dblclick="startEditing(category)">{{category.title.text}}</label>
                         <button class="destroy" ng-click="removeCategory(category)"></button>
                     </div>
                     <form ng-submit="doneEditing(category)">
@@ -28,24 +28,26 @@
                 </div>
                 <ul class="plan-item-list" ng-show="planCategories.length">
                     <li ng-repeat="item in category.items.asArray()" ng-class="{editing: item == editedItem}">
-                        <div class="view">
-                            <label ng-dblclick="editItem(item)">{{item.title.text}}</label>
-                            <button class="destroy" ng-click="removeItem(categoryIndex, item)"></button>
+                        <div class="title">
+                            <div class="view">
+                                <label ng-dblclick="startEditing(item)">{{item.title.text}}</label>
+                                <button class="destroy" ng-click="removeItem(categoryIndex, item)"></button>
+                            </div>
+                            <form ng-submit="doneEditing(item)">
+                                <input class="edit" ng-model="item.title.text" collaborative on-blur="doneEditing()" focus="item == editedItem">
+                            </form>
                         </div>
-                        <form ng-submit="doneEditing(item)">
-                            <input class="edit" ng-model="item.title.text" collaborative on-blur="doneEditing()" focus="item == editedItem">
-                        </form>
                         <div class="distribution-input">
                             <div class="consume">
                                 I consume:
                                 <form ng-submit="doneEditing(item)">
-                                    <input class="input" ng-model="item.distribution.get(currentUser.userId).consumeCount.text" collaborative on-blur="doneEditing()" focus="item == editedItem" only-digits>
+                                    <input class="input" ng-model="item.distribution.get(currentUser.userId).consumeCount.text" collaborative on-blur="doneEditing()" only-digits>
                                 </form>
                             </div>
                             <div class="provide">
                                 I provide:
                                 <form ng-submit="doneEditing(item)">
-                                    <input class="input" ng-model="item.distribution.get(currentUser.userId).provideCount.text" collaborative on-blur="doneEditing()" focus="item == editedItem" only-digits>
+                                    <input class="input" ng-model="item.distribution.get(currentUser.userId).provideCount.text" collaborative on-blur="doneEditing()" only-digits>
                                 </form>
                             </div>
                         </div>

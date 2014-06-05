@@ -107,7 +107,7 @@ angular.module('planning').controller('MainController', ['$scope', '$routeParams
     };
 
     //begin editing of any item
-    $scope.editItem = function (item) {
+    $scope.startEditing = function (item) {
       $scope.editedItem = item;
     };
 
