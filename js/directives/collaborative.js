@@ -16,7 +16,7 @@
 angular.module('planning').directive('collaborative',
   /**
    * Directive for adding cursor management to text fields bound to
-   * collaboraative strings. Regular data binding works fine without it,
+   * collaborative strings. Regular data binding works fine without it,
    * but remote updates will not properly maintain the cursor. Including
    * this directive ensures correct logical positioning of the cursor
    * on active fields.
