@@ -87,7 +87,6 @@ angular.module('planning').directive('collaborative',
       };
 
       this.unbind = function () {
-        console.log('Removing listeners');
         this.string.removeEventListener(gapi.drive.realtime.EventType.TEXT_INSERTED, this._insertListener);
         this.string.removeEventListener(gapi.drive.realtime.EventType.TEXT_DELETED, this._deleteListener);
       };
