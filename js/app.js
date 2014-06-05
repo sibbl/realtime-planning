@@ -17,10 +17,15 @@ app.module = angular.module('planning', []);
 app.PlanCategory = function () {
 };
 
-//simple type for plan items
+//type for plan items
 app.PlanItem = function () {
 };
 
+//type for distribution
+app.PlanItemDistribution = function() {
+};
+
+//Initializer for constructing via the realtime API
 app.PlanCategory.prototype.initialize = function (title) {
   var model = gapi.drive.realtime.custom.getModel(this);
 
@@ -28,13 +33,18 @@ app.PlanCategory.prototype.initialize = function (title) {
   this.items = model.createList();
 };
 
-//Initializer for constructing via the realtime API
 app.PlanItem.prototype.initialize = function (title) {
   var model = gapi.drive.realtime.custom.getModel(this);
 
   this.title = model.createString(title);
-  this.providers = model.createList();
-  this.consumers = model.createList();
+  this.distribution = model.createMap();
+};
+
+app.PlanItemDistribution.prototype.initialize = function () {
+  var model = gapi.drive.realtime.custom.getModel(this);
+
+  this.consumeCount = model.createString("0");
+  this.provideCount = model.createString("0");
 };
 
 
@@ -112,10 +122,14 @@ gapi.load('auth:client:drive-share:drive-realtime', function () {
   gapi.drive.realtime.custom.setInitializer(app.PlanCategory, app.PlanCategory.prototype.initialize);
   //register our PlanItem class
   app.PlanItem.prototype.title = gapi.drive.realtime.custom.collaborativeField('title');
-  app.PlanItem.prototype.providers = gapi.drive.realtime.custom.collaborativeField('providers');
-  app.PlanItem.prototype.consumers = gapi.drive.realtime.custom.collaborativeField('consumers');
+  app.PlanItem.prototype.distribution = gapi.drive.realtime.custom.collaborativeField('distribution');
   gapi.drive.realtime.custom.registerType(app.PlanItem, 'planItem');
   gapi.drive.realtime.custom.setInitializer(app.PlanItem, app.PlanItem.prototype.initialize);
+  //register our PlanItemDistribution class
+  app.PlanItemDistribution.prototype.consumeCount = gapi.drive.realtime.custom.collaborativeField('consumeCount');
+  app.PlanItemDistribution.prototype.provideCount = gapi.drive.realtime.custom.collaborativeField('provideCount');
+  gapi.drive.realtime.custom.registerType(app.PlanItemDistribution, 'planItemDistribution');
+  gapi.drive.realtime.custom.setInitializer(app.PlanItemDistribution, app.PlanItemDistribution.prototype.initialize);
 
   $(document).ready(function () {
     angular.bootstrap(document, ['planning']);
