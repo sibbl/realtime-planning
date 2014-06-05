@@ -39,23 +39,25 @@
                             <div class="consume">
                                 I consume:
                                 <form ng-submit="doneEditing(item)">
-                                    <input class="input" ng-model="item.distribution.get(currentUser.userId).consumeCount.text" collaborative on-blur="doneEditing()" focus="item == editedItem">
+                                    <input class="input" ng-model="item.distribution.get(currentUser.userId).consumeCount.text" collaborative on-blur="doneEditing()" focus="item == editedItem" only-digits>
                                 </form>
                             </div>
                             <div class="provide">
                                 I provide:
                                 <form ng-submit="doneEditing(item)">
-                                    <input class="input" ng-model="item.distribution.get(currentUser.userId).provideCount.text" collaborative on-blur="doneEditing()" focus="item == editedItem">
+                                    <input class="input" ng-model="item.distribution.get(currentUser.userId).provideCount.text" collaborative on-blur="doneEditing()" focus="item == editedItem" only-digits>
                                 </form>
                             </div>
                         </div>
                         <div class="distribution-list">
                             <ul ng-show="item.distribution.length">
+                            <!--
                                 <li ng-repeat="distrItem in item.distribution.items()" ng-class="{isMe: distrItem[0] == currentUser.userId}">
                                     <div class="username">{{distrItem[0]}}</div>
                                     <div class="consume">consumes: {{distrItem[1].consumeCount.text}}</div>
                                     <div class="provides">provides: {{distrItem[1].provideCount.text}}</div>
                                 </li>
+                            -->
                             </ul>
                         </div>
                     </li>
