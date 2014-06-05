@@ -51,7 +51,7 @@ angular.module('planning').controller('MainController', ['$scope', '$routeParams
 
     $scope.share = function () {
       var fileId = this.fileId;
-      var client = new gapi.drive.share.ShareClient(appId);
+      var client = new gapi.drive.share.ShareClient(appId.split("-").shift());
       client.setItemIds([fileId]);
       client.showSettingsDialog();
     };
