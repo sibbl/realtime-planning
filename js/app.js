@@ -132,6 +132,32 @@ gapi.load('auth:client:drive-share:drive-realtime', function () {
   gapi.drive.realtime.custom.setInitializer(app.PlanItemDistribution, app.PlanItemDistribution.prototype.initialize);
 
   $(document).ready(function () {
+    var urlParam = function(name){
+      var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
+      return results != null && results.length > 1 ? results[1] : 0;
+    }
+    var state = urlParam('state');
+    if(state) {
+      var stateObj = null;
+      try{
+        stateObj = JSON.parse(decodeURIComponent(state));
+      }catch(e){};
+      if(stateObj != null && stateObj.ids && stateObj.ids.length >= 1) {
+        var firstId = stateObj.ids[0];
+        var currentUrl = window.location.href;
+        var index = 0;
+        var newUrl = currentUrl;
+        index = currentUrl.indexOf('?');
+        if(index == -1){
+            index = currentUrl.indexOf('#');
+        }
+        if(index != -1){
+            newUrl = currentUrl.substring(0, index);
+        }
+        window.location.href = newUrl += "#/plans/"+firstId;
+        return;
+      }
+    }
     angular.bootstrap(document, ['planning']);
   });
 });
