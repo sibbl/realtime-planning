@@ -1,3 +1,16 @@
 body {
-  
+  background-color: #6a6a61;
+}
+
+#collaborators {
+	border-radius: 0;
+}
+
+#category-list > li {
+	width: 32%;
+}
+
+#category-form {
+	padding: 10px 10px 10px 10px;
+	background-color: #2a2c2b;
 }

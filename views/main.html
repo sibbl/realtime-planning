@@ -1,21 +1,29 @@
-<section id="collaborators">
-    <img ng-repeat="collaborator in collaborators | limitTo: 5"
-         ng-src="{{collaborator.photoUrl}}"
-         alt="{{collaborator.displayName}}"
-         title="{{collaborator.displayName}}"
-         ng-style="{'background-color': collaborator.color}">
-    <button ng-click="share()" id="share">share</button>
+<section class="navbar navbar-inverse" id="collaborators">
+    <div class="container ">
+        <a class="navbar-brand" href="#">Realtime Planning</a>
+        <div class="pull-right">
+            <img ng-repeat="collaborator in collaborators | limitTo: 5"
+                 ng-src="{{collaborator.photoUrl}}"
+                 alt="{{collaborator.displayName}}"
+                 title="{{collaborator.displayName}}"
+                 ng-style="{'background-color': collaborator.color}">
+            <button type="button" class="btn btn-default navbar-btn" ng-click="share()" id="share">share</button>
+        </div>
+        <div class="clearfix"></div>
+    </div>
 </section>
 
-<section id="planningapp">
+<section class="container" id="planningapp">
     <header id="header">
-        <h1>the planning app</h1>
-        <form id="category-form" ng-submit="addCategory()">
-            <input id="new-category-item" placeholder="Add another category" ng-model="newCategoryTitle" autofocus>
+        <form class="input-group" id="category-form" ng-submit="addCategory()">
+            <input type="text" class="form-control" id="new-category-item" placeholder="Add another category" ng-model="newCategoryTitle" autofocus>
+            <span class="input-group-btn">
+                <button type="button" class="btn btn-default" ng-click="addCategory()"><span class="glyphicon glyphicon-plus"></span></button>
+            </span>
         </form>
     </header>
     <section id="main" ng-show="planCategories.length" ng-cloak>
-        <ul id="category-list">
+        <ul class="list-inline" id="category-list">
             <li ng-repeat="(categoryIndex, category) in planCategories.asArray()" ng-class="{editing: category == editedItem}">
                 <div class="title">
                     <div class="view">
