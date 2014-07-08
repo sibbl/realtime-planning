@@ -10,6 +10,8 @@ angular.module('planning').controller('MainController', ['$scope', '$routeParams
    * @constructor
    */
   function ($scope, $routeParams, realtimeDocument, config) {
+    $scope.itemsPerRow = 4;
+
     $scope.fileId = $routeParams.fileId;
     $scope.realtimeDocument = realtimeDocument;
     var appId = config.clientId.split('.').shift();
@@ -59,6 +61,14 @@ angular.module('planning').controller('MainController', ['$scope', '$routeParams
 
     //get categories
     $scope.planCategories = realtimeDocument.getModel().getRoot().get('planCategories');
+
+    //categories range helper for building rows
+    $scope.planCategoriesRange = function() {
+      var range = [];
+      for( var i = 0; i < $scope.planCategories.length; i = i + $scope.itemsPerRow )
+          range.push(i);
+      return range;
+    }
 
     //make sure that all plan items include our user id
     realtimeDocument.getModel().beginCompoundOperation();

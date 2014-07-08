@@ -22,10 +22,11 @@
             </span>
         </form>
     </header>
-    <section id="main" ng-show="planCategories.length" ng-cloak>
-        <ul class="list-inline" id="category-list">
-            <li ng-repeat="(categoryIndex, category) in planCategories.asArray()" ng-class="{editing: category == editedItem}">
-                <div class="title">
+    <section id="main">
+    <div class="row" ng-repeat="categoryIndex in planCategoriesRange()"  ng-show="planCategories.length" ng-cloak>
+        <div class="col-md-{{(12/itemsPerRow)}}" ng-repeat="category in planCategories.asArray().slice(categoryIndex, categoryIndex+itemsPerRow)" ng-class="{editing: category == editedItem}">
+            <div class="panel panel-default" >
+                <div class="panel-heading">
                     <div class="view">
                         <label ng-dblclick="startEditing(category)">{{category.title.text}}</label>
                         <button class="destroy" ng-click="removeCategory(category)"></button>
@@ -81,7 +82,7 @@
                 <form class="add-item-form" ng-submit="addItem(categoryIndex)">
                     <input class="new-category-item" placeholder="What else do we need?" ng-model="newItemTitle">
                 </form>
-            </li>
-        </ul>
+            </div>
+        </div>
     </section>
 </section>
