@@ -3,10 +3,11 @@
         <a class="navbar-brand" href="#">Realtime Planning</a>
         <div class="pull-right">
             <img ng-repeat="collaborator in collaborators | limitTo: 5"
+                 class="img-rounded"
                  ng-src="{{collaborator.photoUrl}}"
                  alt="{{collaborator.displayName}}"
                  title="{{collaborator.displayName}}"
-                 ng-style="{'background-color': collaborator.color}">
+                 ng-style="{'border-color': collaborator.color}">
             <button type="button" class="btn btn-default navbar-btn" ng-click="share()" id="share">share</button>
         </div>
         <div class="clearfix"></div>
@@ -32,18 +33,18 @@
                         <button class="btn btn-default btn-xs pull-right" ng-click="removeCategory(category)"><span class="glyphicon glyphicon-trash"></span></button>
                     </div>
                     <form ng-submit="doneEditing(category)">
-                        <input class="form-control edit" ng-model="category.title.text" collaborative on-blur="doneEditing()" focus="category == editedItem">
+                        <input class="form-control" ng-model="category.title.text" collaborative on-blur="doneEditing()" focus="category == editedItem">
                     </form>
                 </div>
-                <ul class="plan-item-list panel-body">
-                    <li ng-repeat="item in category.items.asArray()" ng-class="{editing: item == editedItem}">
-                        <div class="title">
+                <ul class="list-group">
+                    <li class="list-group-item" ng-repeat="item in category.items.asArray()">
+                        <div class="title hide-editing-form" ng-class="{editing: item == editedItem}">
                             <div class="view">
                                 <label ng-dblclick="startEditing(item)">{{item.title.text}}</label>
-                                <button class="destroy" ng-click="removeItem(categoryIndex, item)"></button>
+                            <button class="btn btn-default btn-xs pull-right" ng-click="removeItem(categoryIndex, item)"><span class="glyphicon glyphicon-trash"></span></button>
                             </div>
                             <form ng-submit="doneEditing(item)">
-                                <input class="edit" ng-model="item.title.text" collaborative on-blur="doneEditing()" focus="item == editedItem">
+                                <input class="form-control" ng-model="item.title.text" collaborative on-blur="doneEditing()" focus="item == editedItem">
                             </form>
                         </div>
                         <div class="distribution-input">
