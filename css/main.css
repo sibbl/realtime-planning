@@ -12,13 +12,10 @@ body {
   border: 2px solid transparent;
 }
 
-#category-list > li {
-	width: 32%;
-}
-
 #category-form {
-	padding: 10px 10px 10px 10px;
+	padding: 10px;
 	background-color: #2a2c2b;
+  border-radius: 7px;
 }
 
 #main {
@@ -37,4 +34,18 @@ body {
 
 .distribution-input {
   margin: .5em 0;
+}
+
+#loading,
+#login {
+  margin: 50px auto 0 auto;
+  max-width: 400px;
+}
+
+.btn-login {
+  padding:4em 0;
+}
+
+.distribution-input>div {
+  padding: 1px 0;
 }
