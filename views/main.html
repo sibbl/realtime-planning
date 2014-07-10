@@ -24,8 +24,8 @@
         </form>
     </header>
     <section id="main">
-    <div class="row" ng-repeat="categoryIndex in planCategoriesRange()"  ng-show="planCategories.length" ng-cloak>
-        <div class="col-md-{{(12/itemsPerRow)}}" ng-repeat="category in planCategories.asArray().slice(categoryIndex, categoryIndex+itemsPerRow)">
+    <div class="row" ng-repeat="categoryRowIndex in planCategoriesRange()"  ng-show="planCategories.length" ng-cloak>
+        <div class="col-md-{{(12/itemsPerRow)}}" ng-repeat="(categoryIndex, category) in planCategories.asArray().slice(categoryRowIndex, categoryRowIndex+itemsPerRow)">
             <div class="panel panel-default" >
                 <div class="panel-heading hide-editing-form" ng-class="{editing: category == editedItem}">
                     <div class="view">
