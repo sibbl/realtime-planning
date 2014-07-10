@@ -24,6 +24,8 @@ angular.module('planning').controller('MainController', ['$scope', '$routeParams
     };
     $scope.collaborators = $scope.realtimeDocument.getCollaborators();
 
+    console.log("collaborators", $scope.collaborators);
+
     //read the current user
     $scope.currentUser = null;
     for(var i in $scope.collaborators) {
@@ -71,18 +73,20 @@ angular.module('planning').controller('MainController', ['$scope', '$routeParams
     }
 
     //make sure that all plan items include our user id
-    realtimeDocument.getModel().beginCompoundOperation();
-    for(var i = 0; i < $scope.planCategories.length; i++) {
-      var cat = $scope.planCategories.get(i);
-      for(var k = 0; k < cat.items.length;k++) {
-        var item = cat.items.get(k);
-        if(item.distribution.has($scope.currentUser.userId) !== true) {
-          var distributionData = realtimeDocument.getModel().create(app.PlanItemDistribution);
-          item.distribution.set($scope.currentUser.userId, distributionData);
+    if($scope.currentUser.userId != null) {
+      realtimeDocument.getModel().beginCompoundOperation();
+      for(var i = 0; i < $scope.planCategories.length; i++) {
+        var cat = $scope.planCategories.get(i);
+        for(var k = 0; k < cat.items.length;k++) {
+          var item = cat.items.get(k);
+          if(item.distribution.has($scope.currentUser.userId) !== true) {
+            var distributionData = $scope.realtimeDocument.getModel().create(app.PlanItemDistribution);
+            item.distribution.set($scope.currentUser.userId, distributionData);
+          }
         }
       }
+      realtimeDocument.getModel().endCompoundOperation();
     }
-    realtimeDocument.getModel().endCompoundOperation();
 
     //create empty string models, which are bound to input fields in the UI
     $scope.newCategoryTitle = '';
@@ -149,15 +153,17 @@ angular.module('planning').controller('MainController', ['$scope', '$routeParams
       realtimeDocument.getModel().redo();
     };
     
-    //cCheck if there are redoable changes.
+    //check if there are redoable changes.
     $scope.canRedo = function () {
       return realtimeDocument.getModel().canRedo;
     };
 
     $scope.increaseNumber = function(modelItem) {
+      if($scope.currentUser.userId == null) return;
       modelItem.text = (parseInt(modelItem.text)+1).toString();
     }
     $scope.decreaseNumber = function(modelItem) {
+      if($scope.currentUser.userId == null) return;
       modelItem.text = (Math.max(parseInt(modelItem.text)-1,0)).toString();
     }
   }]

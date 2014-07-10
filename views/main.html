@@ -1,6 +1,6 @@
 <section class="navbar navbar-inverse" id="collaborators">
     <div class="container ">
-        <a class="navbar-brand" href="#">Realtime Planning</a>
+        <a class="navbar-brand" href="#">Realtime Planning <small class="anonymous-mode" ng-show="{{currentUser.userId == null}}">anonymous mode</small></a>
         <div class="pull-right">
             <img ng-repeat="collaborator in collaborators | limitTo: 5"
                  class="img-rounded userimg"
@@ -47,7 +47,7 @@
                                 <input class="form-control" ng-model="item.title.text" collaborative on-blur="doneEditing()" focus="item == editedItem">
                             </form>
                         </div>
-                        <div class="distribution-input">
+                        <div class="distribution-input" ng-hide="{{currentUser.userId == null}}">
                             <div class="clearfix">
                                 <small>I consume <span class="badge">{{item.distribution.get(currentUser.userId).consumeCount.text}}</span></small>
                                 <div class="btn-group pull-right">
@@ -63,14 +63,14 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="distribution-list" ng-show="{{item.distribution.length}}">
+                        <div class="distribution-list">
                             <table class="table table-condensed">
                                 <tr ng-repeat="userId in item.distribution.keys()" ng-show="{{currentUser.userId != userId}}">
                                     <td width="1px">
                                         <img ng-src="{{getUser(userId).photoUrl}}"
                                              alt="{{getUser(userId).displayName}}"
                                              title="{{getUser(userId).displayName}}"
-                                             class="img-rounded userimg pull-left"
+                                             class="img-rounded userimg"
                                              ng-style="{'border-color': getUser(userId).color}">
                                     </td>
                                     <td>

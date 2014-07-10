@@ -5,10 +5,11 @@ body {
 #collaborators {
 	border-radius: 0;
 }
-
+#collaborators .userimg{
+  margin-left: 5px;
+}
 .userimg {
   height: 2.5em;
-  margin-left: 5px;
   border: 2px solid transparent;
 }
 
@@ -49,4 +50,9 @@ body {
 
 .distribution-input>div {
   padding: 1px 0;
+}
+
+.anonymous-mode {
+  text-transform: uppercase;
+  font-size: 0.5em;
 }
