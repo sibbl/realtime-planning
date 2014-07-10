@@ -35,7 +35,7 @@
                         <input class="form-control edit" ng-model="category.title.text" collaborative on-blur="doneEditing()" focus="category == editedItem">
                     </form>
                 </div>
-                <ul class="plan-item-list" ng-show="planCategories.length">
+                <ul class="plan-item-list panel-body">
                     <li ng-repeat="item in category.items.asArray()" ng-class="{editing: item == editedItem}">
                         <div class="title">
                             <div class="view">
@@ -78,9 +78,9 @@
                         </div>
                     </li>
                 </ul>
-
-                <form class="add-item-form" ng-submit="addItem(categoryIndex)">
-                    <input class="new-category-item" placeholder="What else do we need?" ng-model="newItemTitle">
+            
+                <form class="panel-footer" ng-submit="addItem(categoryIndex)">
+                    <input class="form-control" placeholder="What do we need?" ng-model="newItemTitle">
                 </form>
             </div>
         </div>

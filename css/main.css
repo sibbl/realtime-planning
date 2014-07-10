@@ -15,6 +15,9 @@ body {
 	background-color: #2a2c2b;
 }
 
+#main {
+  margin-top:1em;
+}
 
 .hide-editing-form form {
   display:none;
