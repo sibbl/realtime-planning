@@ -48,17 +48,21 @@
                             </form>
                         </div>
                         <div class="distribution-input">
-                            <div class="consume">
+                            <div class="clearfix">
                                 I consume:
-                                <form ng-submit="doneEditing(item)">
-                                    <input class="input" ng-model="item.distribution.get(currentUser.userId).consumeCount.text" collaborative on-blur="doneEditing()" only-digits>
-                                </form>
+                                {{item.distribution.get(currentUser.userId).consumeCount.text}}
+                                <div class="btn-group pull-right">
+                                  <button ng-click="increaseNumber(item.distribution.get(currentUser.userId).consumeCount)" type="button" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-plus"></span></button>
+                                  <button ng-click="decreaseNumber(item.distribution.get(currentUser.userId).consumeCount)" type="button" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-minus"></span></button>
+                                </div>
                             </div>
-                            <div class="provide">
+                            <div class="clearfix">
                                 I provide:
-                                <form ng-submit="doneEditing(item)">
-                                    <input class="input" ng-model="item.distribution.get(currentUser.userId).provideCount.text" collaborative on-blur="doneEditing()" only-digits>
-                                </form>
+                                {{item.distribution.get(currentUser.userId).provideCount.text}}
+                                <div class="btn-group pull-right">
+                                  <button ng-click="increaseNumber(item.distribution.get(currentUser.userId).provideCount)"type="button" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-plus"></span></button>
+                                  <button ng-click="decreaseNumber(item.distribution.get(currentUser.userId).provideCount)"type="button" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-minus"></span></button>
+                                </div>
                             </div>
                         </div>
                         <div class="distribution-list">

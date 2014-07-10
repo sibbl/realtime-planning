@@ -153,5 +153,12 @@ angular.module('planning').controller('MainController', ['$scope', '$routeParams
     $scope.canRedo = function () {
       return realtimeDocument.getModel().canRedo;
     };
+
+    $scope.increaseNumber = function(modelItem) {
+      modelItem.text = (parseInt(modelItem.text)+1).toString();
+    }
+    $scope.decreaseNumber = function(modelItem) {
+      modelItem.text = (Math.max(parseInt(modelItem.text)-1,0)).toString();
+    }
   }]
 );
