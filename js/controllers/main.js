@@ -24,8 +24,6 @@ angular.module('planning').controller('MainController', ['$scope', '$routeParams
     };
     $scope.collaborators = $scope.realtimeDocument.getCollaborators();
 
-    console.log("collaborators", $scope.collaborators);
-
     //read the current user
     $scope.currentUser = null;
     for(var i in $scope.collaborators) {
@@ -60,20 +58,12 @@ angular.module('planning').controller('MainController', ['$scope', '$routeParams
       client.showSettingsDialog();
     };
 
-
     //get categories
     $scope.planCategories = realtimeDocument.getModel().getRoot().get('planCategories');
 
-    //categories range helper for building rows
-    $scope.planCategoriesRange = function() {
-      var range = [];
-      for( var i = 0; i < $scope.planCategories.length; i = i + $scope.itemsPerRow )
-          range.push(i);
-      return range;
-    }
-
-    //make sure that all plan items include our user id
-    if($scope.currentUser.userId != null) {
+    $scope.checkIfCurrentUserIsInAllPlanItems = function() {
+      //make sure that all plan items include our user id
+      if($scope.currentUser.userId == null) return;
       realtimeDocument.getModel().beginCompoundOperation();
       for(var i = 0; i < $scope.planCategories.length; i++) {
         var cat = $scope.planCategories.get(i);
@@ -86,6 +76,17 @@ angular.module('planning').controller('MainController', ['$scope', '$routeParams
         }
       }
       realtimeDocument.getModel().endCompoundOperation();
+    }
+    
+    $scope.checkIfCurrentUserIsInAllPlanItems();
+
+    //categories range helper for building rows
+    $scope.planCategoriesRange = function() {
+      $scope.checkIfCurrentUserIsInAllPlanItems();
+      var range = [];
+      for( var i = 0; i < $scope.planCategories.length; i = i + $scope.itemsPerRow )
+          range.push(i);
+      return range;
     }
 
     //create empty string models, which are bound to input fields in the UI
