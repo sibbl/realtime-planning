@@ -3,7 +3,7 @@
         <a class="navbar-brand" href="#">Realtime Planning</a>
         <div class="pull-right">
             <img ng-repeat="collaborator in collaborators | limitTo: 5"
-                 class="img-rounded"
+                 class="img-rounded userimg"
                  ng-src="{{collaborator.photoUrl}}"
                  alt="{{collaborator.displayName}}"
                  title="{{collaborator.displayName}}"
@@ -49,37 +49,38 @@
                         </div>
                         <div class="distribution-input">
                             <div class="clearfix">
-                                I consume:
-                                {{item.distribution.get(currentUser.userId).consumeCount.text}}
+                                I consume <span class="badge">{{item.distribution.get(currentUser.userId).consumeCount.text}}</span>
                                 <div class="btn-group pull-right">
                                   <button ng-click="increaseNumber(item.distribution.get(currentUser.userId).consumeCount)" type="button" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-plus"></span></button>
                                   <button ng-click="decreaseNumber(item.distribution.get(currentUser.userId).consumeCount)" type="button" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-minus"></span></button>
                                 </div>
                             </div>
                             <div class="clearfix">
-                                I provide:
-                                {{item.distribution.get(currentUser.userId).provideCount.text}}
+                                I provide <span class="badge">{{item.distribution.get(currentUser.userId).provideCount.text}}</span>
                                 <div class="btn-group pull-right">
                                   <button ng-click="increaseNumber(item.distribution.get(currentUser.userId).provideCount)"type="button" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-plus"></span></button>
                                   <button ng-click="decreaseNumber(item.distribution.get(currentUser.userId).provideCount)"type="button" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-minus"></span></button>
                                 </div>
                             </div>
                         </div>
-                        <div class="distribution-list">
-                            <ul>
-                                <li ng-repeat="userId in item.distribution.keys()">
-                                    <div class="thumb">
+                        <div class="distribution-list" ng-show="{{item.distribution.length}}">
+                            <table class="table table-condensed">
+                                <tr ng-repeat="userId in item.distribution.keys()" ng-show="{{currentUser.userId != userId}}">
+                                    <td width="1px">
                                         <img ng-src="{{getUser(userId).photoUrl}}"
                                              alt="{{getUser(userId).displayName}}"
                                              title="{{getUser(userId).displayName}}"
-                                             ng-style="{'background-color': getUser(userId).color}">
-                                    </div>
-                                    <div class="username">{{getUser(userId).displayName}}</div>
+                                             class="img-rounded userimg pull-left"
+                                             ng-style="{'border-color': getUser(userId).color}">
+                                    </td>
+                                    <td>
+                                        <div class="username">{{getUser(userId).displayName}}</div>
 
-                                    <div class="consume">consumes: {{item.distribution.get(userId).consumeCount.text}}</div>
-                                    <div class="provides">provides: {{item.distribution.get(userId).provideCount.text}}</div>
-                                </li>
-                            </ul>
+                                        <div class="consume"><small>consumes <span class="badge">{{item.distribution.get(userId).consumeCount.text}}</span></small></div>
+                                        <div class="provides"><small>provides <span class="badge">{{item.distribution.get(userId).provideCount.text}}</span></small></div>
+                                    </td>
+                                </tr>
+                            </table>
                         </div>
                     </li>
                 </ul>

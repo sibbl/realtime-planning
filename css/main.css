@@ -6,7 +6,7 @@ body {
 	border-radius: 0;
 }
 
-#collaborators img {
+.userimg {
   height: 2.5em;
   margin-left: 5px;
   border: 2px solid transparent;
@@ -33,4 +33,8 @@ body {
 }
 .hide-editing-form.editing form {
   display:block;
+}
+
+.distribution-input {
+  margin: .5em 0;
 }
