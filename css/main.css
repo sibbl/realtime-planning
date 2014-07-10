@@ -14,3 +14,14 @@ body {
 	padding: 10px 10px 10px 10px;
 	background-color: #2a2c2b;
 }
+
+
+.hide-editing-form form {
+  display:none;
+}
+.hide-editing-form.editing .view {
+  display:none;
+}
+.hide-editing-form.editing form {
+  display:block;
+}

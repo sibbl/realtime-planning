@@ -24,15 +24,15 @@
     </header>
     <section id="main">
     <div class="row" ng-repeat="categoryIndex in planCategoriesRange()"  ng-show="planCategories.length" ng-cloak>
-        <div class="col-md-{{(12/itemsPerRow)}}" ng-repeat="category in planCategories.asArray().slice(categoryIndex, categoryIndex+itemsPerRow)" ng-class="{editing: category == editedItem}">
+        <div class="col-md-{{(12/itemsPerRow)}}" ng-repeat="category in planCategories.asArray().slice(categoryIndex, categoryIndex+itemsPerRow)">
             <div class="panel panel-default" >
-                <div class="panel-heading">
+                <div class="panel-heading hide-editing-form" ng-class="{editing: category == editedItem}">
                     <div class="view">
                         <label ng-dblclick="startEditing(category)">{{category.title.text}}</label>
-                        <button class="destroy" ng-click="removeCategory(category)"></button>
+                        <button class="btn btn-default btn-xs pull-right" ng-click="removeCategory(category)"><span class="glyphicon glyphicon-trash"></span></button>
                     </div>
                     <form ng-submit="doneEditing(category)">
-                        <input class="edit" ng-model="category.title.text" collaborative on-blur="doneEditing()" focus="category == editedItem">
+                        <input class="form-control edit" ng-model="category.title.text" collaborative on-blur="doneEditing()" focus="category == editedItem">
                     </form>
                 </div>
                 <ul class="plan-item-list" ng-show="planCategories.length">
