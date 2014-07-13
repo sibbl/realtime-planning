@@ -40,6 +40,15 @@ app.PlanItem.prototype.initialize = function (title) {
   this.distribution = model.createMap();
 };
 
+app.PlanItem.prototype.getAmount = function() {
+  var amount = 0;
+  var distributionValues = this.distribution.values();
+  for(var i = 0; i < distributionValues.length; i++) {
+    amount += distributionValues[i].provideCount - distributionValues[i].consumeCount;
+  }
+  return amount;
+}
+
 app.PlanItemDistribution.prototype.initialize = function () {
   var model = gapi.drive.realtime.custom.getModel(this);
 

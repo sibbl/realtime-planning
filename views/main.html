@@ -41,6 +41,7 @@
                         <div class="title hide-editing-form" ng-class="{editing: item == editedItem}">
                             <div class="view">
                                 <label ng-dblclick="startEditing(item)">{{item.title.text}}</label>
+                                <span class="label" ng-class="{'label-success': item.getAmount() >= 0, 'label-danger': item.getAmount() < 0}">{{item.getAmount()}}</span>
                             <button class="btn btn-default btn-xs pull-right" ng-click="removeItem(categoryIndex, item)"><span class="glyphicon glyphicon-trash"></span></button>
                             </div>
                             <form ng-submit="doneEditing(item)">
