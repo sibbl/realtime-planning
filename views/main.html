@@ -50,17 +50,17 @@
                         </div>
                         <div class="distribution-input" ng-hide="{{currentUser.userId == null}}">
                             <div class="clearfix">
-                                <small>I consume <span class="badge">{{item.distribution.get(currentUser.userId).consumeCount.text}}</span></small>
+                                <small>I consume <span class="badge">{{item.distribution.get(currentUser.userId || '0').consumeCount.text}}</span></small>
                                 <div class="btn-group pull-right">
-                                  <button ng-click="increaseNumber(item.distribution.get(currentUser.userId).consumeCount)" type="button" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-plus"></span></button>
-                                  <button ng-click="decreaseNumber(item.distribution.get(currentUser.userId).consumeCount)" type="button" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-minus"></span></button>
+                                  <button ng-click="increaseNumber(item.distribution.get(currentUser.userId || '0').consumeCount)" type="button" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-plus"></span></button>
+                                  <button ng-click="decreaseNumber(item.distribution.get(currentUser.userId || '0').consumeCount)" type="button" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-minus"></span></button>
                                 </div>
                             </div>
                             <div class="clearfix">
-                                <small>I provide <span class="badge">{{item.distribution.get(currentUser.userId).provideCount.text}}</span></small>
+                                <small>I provide <span class="badge">{{item.distribution.get(currentUser.userId || '0').provideCount.text}}</span></small>
                                 <div class="btn-group pull-right">
-                                  <button ng-click="increaseNumber(item.distribution.get(currentUser.userId).provideCount)"type="button" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-plus"></span></button>
-                                  <button ng-click="decreaseNumber(item.distribution.get(currentUser.userId).provideCount)"type="button" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-minus"></span></button>
+                                  <button ng-click="increaseNumber(item.distribution.get(currentUser.userId || '0').provideCount)"type="button" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-plus"></span></button>
+                                  <button ng-click="decreaseNumber(item.distribution.get(currentUser.userId || '0').provideCount)"type="button" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-minus"></span></button>
                                 </div>
                             </div>
                         </div>
