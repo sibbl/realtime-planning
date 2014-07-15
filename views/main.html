@@ -42,7 +42,7 @@
                             <div class="view">
                                 <label ng-dblclick="startEditing(item)">{{item.title.text}}</label>
                                 <span class="label" ng-class="{'label-success': item.getAmount() >= 0, 'label-danger': item.getAmount() < 0}">{{item.getAmount()}}</span>
-                            <button class="btn btn-default btn-xs pull-right" ng-click="removeItem(categoryIndex, item)"><span class="glyphicon glyphicon-trash"></span></button>
+                            <button class="btn btn-default btn-xs pull-right" ng-click="removeItem(categoryRowIndex+categoryIndex, item)"><span class="glyphicon glyphicon-trash"></span></button>
                             </div>
                             <form ng-submit="doneEditing(item)">
                                 <input class="form-control" ng-model="item.title.text" collaborative on-blur="doneEditing()" focus="item == editedItem">
@@ -86,7 +86,7 @@
                     </li>
                 </ul>
             
-                <form class="panel-footer" ng-submit="addItem(categoryIndex)">
+                <form class="panel-footer" ng-submit="addItem(categoryRowIndex+categoryIndex)">
                     <input class="form-control" placeholder="What do we need?" ng-model="newItemTitle">
                 </form>
             </div>
